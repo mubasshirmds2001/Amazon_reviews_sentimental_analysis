@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+            padding: 1.3rem;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
+            box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            animation: fade-in 0.5s ease-in-out;
+        }
+
+        .input {
+            border: 2px solid transparent;
+            width: 60%;
+            height: 2rem;
+            padding: 0.5rem;
+            outline: none;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .input:hover,
+        .input:focus {
+            border: 2px solid #4a9dec;
+            background-color: #fff;
+        }
+
+        .submit-button {
+            background-color: #4a9dec;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #357bc8;
+        }
+
+        form {
+            display: block;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        #sentimentText {
+            color: #96005f;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #sentimentResult {
+            margin-top: 20px;
+            display: none;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sentiment Analysis</h1>
+        <form id="sentimentForm" action="/analyze" method="POST">
+            <input type="text" id="input_text" class="input" name="text" placeholder="Enter your feedback:"><br><br>
+            <input type="submit" class="submit-button" value="Submit">
+        </form>
+
+        <div id="sentimentResult">
+            <h2>Predicted Sentiment:</h2>
+            <h2 id="sentimentText"></h2>
+            <!-- Add an empty image tag with id "sentimentImage" -->
+            <img id="sentimentImage" src="/sentiment-graph" alt="Sentiment Graph">
+
+        </div>
+    </div>
+    <script>
+        document.getElementById("sentimentForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("sentimentText").innerText = "" + data.sentiment;
+
+                    if (data.img_path) {
+                        // Set the source of the image element to the returned path
+                        document.getElementById("sentimentImage").src = data.img_path;
+                    } else {
+                        // Handle case where img_path is undefined or null
+                        console.error("Image path is undefined or null.");
+                    }
+
+                    document.getElementById("sentimentResult").style.display = "block";
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+    </script>
+</body>
+
+</html>
