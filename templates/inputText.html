@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='input_styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Sentiment Analysis</h1>
+        <form id="sentimentForm" action="/analyze" method="POST">
+            <input type="text" id="input_text" class="input" name="text" placeholder="Enter your feedback:"><br><br>
+            <input type="submit" class="submit-button" value="Submit">
+        </form>
+
+        <div id="sentimentResult">
+            <h2>Predicted Sentiment:</h2>
+            <h2 id="sentimentText"></h2>
+            <img id="sentimentImage" src="" alt="Sentiment Graph">
+        </div>
+    </div>
+    <script>
+        document.getElementById("sentimentForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("sentimentText").innerText = "" + data.sentiment;
+
+                    if (data.plot_url) {
+                        // Set the source of the image element to the returned plot_url
+                        document.getElementById("sentimentImage").src = "data:image/png;base64," + data.plot_url;
+                        document.getElementById("sentimentImage").style.display = "block"; // Display the image
+                    } else {
+                        // Handle case where plot_url is undefined or null
+                        console.error("Plot URL is undefined or null.");
+                    }
+
+                    document.getElementById("sentimentResult").style.display = "block";
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+    </script>
+</body>
+
+</html>
