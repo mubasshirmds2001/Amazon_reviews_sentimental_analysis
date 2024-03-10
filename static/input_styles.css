@@ -1,94 +1,330 @@
+@font-face {
+  font-family: Poppins-Regular;
+  src: url("./Poppins-Regular.ttf");
+}
+
 body {
-    background-color: #f8f9fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #122932;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Poppins-Regular;
 }
 
 .container {
-    text-align: center;
-    width: 80%;
-    max-width: 600px;
-    padding: 1.3rem;
-    border-radius: 10px;
-    background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
-    box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 16px;
-    animation: fade-in 0.5s ease-in-out;
-    margin: 1rem;
-    margin-top: 5rem;
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(0, 153, 224, 0.15);
+  box-shadow: 1px 20px 20px 0px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.1), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.1), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1); */
+  border-radius: 16px;
+  animation: fade-in 0.5s ease-in-out;
+  margin: 1rem;
+  color: #ffffff;
+  margin-top: 5rem;
+}
+
+.container h1 {
+  font-size: 1.7rem;
+  padding: 0.3rem;
+  color: #fbd17e;
 }
 
 .input {
-    border: 2px solid transparent;
-    width: 60%;
-    height: 2rem;
-    padding: 0.5rem;
-    outline: none;
-    background-color: #f3f3f3;
-    border-radius: 10px;
-    transition: all 0.3s;
+  border: 2px solid transparent;
+  width: 60%;
+  height: 2rem;
+  padding: 0.5rem;
+  outline: none;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  transition: all 0.3s;
 }
 
 .input:hover,
 .input:focus {
-    border: 2px solid #4a9dec;
-    background-color: #fff;
+  border: 2px solid #4a9dec;
+  background-color: #fff;
 }
 
 .submit-button {
-    background-color: #4a9dec;
-    color: #fff;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-    background-color: #357bc8;
+  background-color: #45a049;
 }
 
 form {
-    display: block;
-    justify-content: center;
-    align-items: center;
+  display: block;
+  justify-content: center;
+  align-items: center;
 }
 
 h2 {
-    margin: 0;
+  margin: 0;
 }
 
 #sentimentText {
-    color: #96005f;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+  color: #fbd17e;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 #sentimentResult {
-    margin-top: 20px;
-    display: none;
+  margin-top: 20px;
+  display: none;
 }
 
 #sentimentImage {
-    max-width: 100%;
-    height: auto;
-    display: none;
-    margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+  display: none;
+  margin-top: 20px;
 }
 
 @keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pl {
+  width: 6em;
+  height: 6em;
+}
+
+.pl__ring {
+  animation: ringA 2s linear infinite;
+}
+
+.pl__ring--a {
+  stroke: #f42f25;
+}
+
+.pl__ring--b {
+  animation-name: ringB;
+  stroke: #ffdd00;
+}
+
+.pl__ring--c {
+  animation-name: ringC;
+  stroke: #255ff4;
+}
+
+.pl__ring--d {
+  animation-name: ringD;
+  stroke: #2cf425;
+}
+
+/* Animations */
+@keyframes ringA {
+  from,
+  4% {
+    stroke-dasharray: 0 660;
+    stroke-width: 20;
+    stroke-dashoffset: -330;
+  }
+
+  12% {
+    stroke-dasharray: 60 600;
+    stroke-width: 30;
+    stroke-dashoffset: -335;
+  }
+
+  32% {
+    stroke-dasharray: 60 600;
+    stroke-width: 30;
+    stroke-dashoffset: -595;
+  }
+
+  40%,
+  54% {
+    stroke-dasharray: 0 660;
+    stroke-width: 20;
+    stroke-dashoffset: -660;
+  }
+
+  62% {
+    stroke-dasharray: 60 600;
+    stroke-width: 30;
+    stroke-dashoffset: -665;
+  }
+
+  82% {
+    stroke-dasharray: 60 600;
+    stroke-width: 30;
+    stroke-dashoffset: -925;
+  }
+
+  90%,
+  to {
+    stroke-dasharray: 0 660;
+    stroke-width: 20;
+    stroke-dashoffset: -990;
+  }
+}
+
+@keyframes ringB {
+  from,
+  12% {
+    stroke-dasharray: 0 220;
+    stroke-width: 20;
+    stroke-dashoffset: -110;
+  }
+
+  20% {
+    stroke-dasharray: 20 200;
+    stroke-width: 30;
+    stroke-dashoffset: -115;
+  }
+
+  40% {
+    stroke-dasharray: 20 200;
+    stroke-width: 30;
+    stroke-dashoffset: -195;
+  }
+
+  48%,
+  62% {
+    stroke-dasharray: 0 220;
+    stroke-width: 20;
+    stroke-dashoffset: -220;
+  }
+
+  70% {
+    stroke-dasharray: 20 200;
+    stroke-width: 30;
+    stroke-dashoffset: -225;
+  }
+
+  90% {
+    stroke-dasharray: 20 200;
+    stroke-width: 30;
+    stroke-dashoffset: -305;
+  }
+
+  98%,
+  to {
+    stroke-dasharray: 0 220;
+    stroke-width: 20;
+    stroke-dashoffset: -330;
+  }
+}
+
+@keyframes ringC {
+  from {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: 0;
+  }
+
+  8% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -5;
+  }
+
+  28% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -175;
+  }
+
+  36%,
+  58% {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: -220;
+  }
+
+  66% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -225;
+  }
+
+  86% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -395;
+  }
+
+  94%,
+  to {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: -440;
+  }
+}
+
+@keyframes ringD {
+  from,
+  8% {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: 0;
+  }
+
+  16% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -5;
+  }
+
+  36% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -175;
+  }
+
+  44%,
+  50% {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: -220;
+  }
+
+  58% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -225;
+  }
+
+  78% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -395;
+  }
+
+  86%,
+  to {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: -440;
+  }
+}
+
+#loadingContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

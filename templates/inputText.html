@@ -10,7 +10,7 @@
 
 <body>
     <div class="container">
-        <h1>Sentiment Analysis</h1>
+        <h1>Customer Review Sentiment Analysis</h1>
         <form id="sentimentForm" action="/analyze" method="POST">
             <input type="text" id="input_text" class="input" name="text" placeholder="Enter your feedback:"><br><br>
             <input type="submit" class="submit-button" value="Submit">
@@ -22,11 +22,64 @@
             <img id="sentimentImage" src="" alt="Sentiment Graph">
         </div>
     </div>
+    <div id="loadingContainer">
+        <svg viewBox="0 0 240 240" class="pl" id="loadingAnim">
+          <circle
+            stroke-linecap="round"
+            stroke-dashoffset="-330"
+            stroke-dasharray="0 660"
+            stroke-width="20"
+            stroke="#000"
+            fill="none"
+            r="105"
+            cy="120"
+            cx="120"
+            class="pl__ring pl__ring--a"
+          ></circle>
+          <circle
+            stroke-linecap="round"
+            stroke-dashoffset="-110"
+            stroke-dasharray="0 220"
+            stroke-width="20"
+            stroke="#000"
+            fill="none"
+            r="35"
+            cy="120"
+            cx="120"
+            class="pl__ring pl__ring--b"
+          ></circle>
+          <circle
+            stroke-linecap="round"
+            stroke-dasharray="0 440"
+            stroke-width="20"
+            stroke="#000"
+            fill="none"
+            r="70"
+            cy="120"
+            cx="85"
+            class="pl__ring pl__ring--c"
+          ></circle>
+          <circle
+            stroke-linecap="round"
+            stroke-dasharray="0 440"
+            stroke-width="20"
+            stroke="#000"
+            fill="none"
+            r="70"
+            cy="120"
+            cx="155"
+            class="pl__ring pl__ring--d"
+          ></circle>
+        </svg>
+      </div>
     <script>
+        const loading = document.getElementById('loadingContainer');
+        loading.style.display = 'none';
         document.getElementById("sentimentForm").addEventListener("submit", function (event) {
             event.preventDefault();
             var form = event.target;
             var formData = new FormData(form);
+            loading.style.display = 'block';
 
             fetch(form.action, {
                 method: 'POST',
@@ -44,10 +97,13 @@
                         // Handle case where plot_url is undefined or null
                         console.error("Plot URL is undefined or null.");
                     }
-
+                    loading.style.display = 'none';
                     document.getElementById("sentimentResult").style.display = "block";
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    loading.style.display = 'none';
+                });
         });
 
     </script>

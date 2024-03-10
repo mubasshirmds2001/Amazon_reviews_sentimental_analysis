@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV File</title>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='upload_styles.css') }}">
+</head>
+<body>
+    <h1>Upload CSV File</h1>
+    <form id="fileForm" enctype="multipart/form-data">
+        <label for="fileInput">Choose a CSV File:</label><br>
+        <input type="file" id="fileInput" name="file"><br><br>
+        <input type="button" value="Upload File" onclick="uploadFile()">
+    </form>
+
+    <div id="result">
+        <!-- Display the bar plot -->
+        <div id="barPlotPlaceholder"></div>
+        <!-- Display the pie chart -->
+        <div id="pieChartPlaceholder"></div>
+        <!-- Image element for displaying sentiment graph -->
+    </div>
+
+    <div id="loadingContainer">
+        <svg viewBox="0 0 240 240" class="pl" id="loadingAnim">
+          <circle
+            stroke-linecap="round"
+            stroke-dashoffset="-330"
+            stroke-dasharray="0 660"
+            stroke-width="20"
+            stroke="#000"
+            fill="none"
+            r="105"
+            cy="120"
+            cx="120"
+            class="pl__ring pl__ring--a"
+          ></circle>
+          <circle
+            stroke-linecap="round"
+            stroke-dashoffset="-110"
+            stroke-dasharray="0 220"
+            stroke-width="20"
+            stroke="#000"
+            fill="none"
+            r="35"
+            cy="120"
+            cx="120"
+            class="pl__ring pl__ring--b"
+          ></circle>
+          <circle
+            stroke-linecap="round"
+            stroke-dasharray="0 440"
+            stroke-width="20"
+            stroke="#000"
+            fill="none"
+            r="70"
+            cy="120"
+            cx="85"
+            class="pl__ring pl__ring--c"
+          ></circle>
+          <circle
+            stroke-linecap="round"
+            stroke-dasharray="0 440"
+            stroke-width="20"
+            stroke="#000"
+            fill="none"
+            r="70"
+            cy="120"
+            cx="155"
+            class="pl__ring pl__ring--d"
+          ></circle>
+        </svg>
+      </div>
+
+    <script>
+
+        const loading = document.getElementById('loadingContainer');
+        const res =  document.getElementById('result');
+
+        loading.style.display = 'none';
+        function uploadFile() {
+            var fileInput = document.getElementById("fileInput");
+            var file = fileInput.files[0];
+            if (file) {
+                res.innerHTML = "";
+                loading.style.display = 'block';
+                var formData = new FormData();
+                formData.append("file", file);
+    
+                fetch('/analyze', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        res.innerHTML = '<p>Error: ' + data.error + '</p>';
+                    } else if (data.plot_url_bar && data.plot_url_pie) {
+                        loading.style.display = 'none';
+                        // Display the bar plot
+                        res.innerHTML += '<div id="barPlotPlaceholder"><img src="data:image/png;base64,' + data.plot_url_bar + '" alt="Bar Plot"></div>';
+    
+                        // Display the pie chart
+                        res.innerHTML += '<div id="pieChartPlaceholder"><img src="data:image/png;base64,' + data.plot_url_pie + '" alt="Pie Chart"></div>';
+                    } else {
+                        // Handle case where plot URLs are undefined or null
+                        loading.style.display = 'none';
+                        console.error("Plot URLs are undefined or null.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert("Please select a file to upload.");
+            }
+        }
+    </script>
+</body>
+</html>

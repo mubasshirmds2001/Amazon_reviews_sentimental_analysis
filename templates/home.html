@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        @font-face {
+            font-family: Poppins-Regular;
+            src: url("{{ url_for('static',filename='Poppins-Regular.ttf') }}");
+        }
+
+        body {
+            font-family: Poppins-Regular;
+            margin: 0;
+            padding: 0;
+            background-color: #122932;
+            height: 60vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fbd17e;
+            font-size: 3rem;
+        }
+
+        .container {
+            display: block;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10rem;
+        }
+
+        #card {
+            width: 250px;
+            height: 150px;
+            background-color: #4158D0;
+            border-radius: 13px;
+            font-size: 1.5rem;
+            color: #576066 !important;
+            background: #fbd17e;
+
+            background: linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+
+            background: -moz-linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+
+            background: -webkit-linear-gradient(90deg, hsla(40, 94%, 74%, 1) 0%, hsla(60, 89%, 72%, 1) 100%);
+
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#FBD07C", endColorstr="#F7F779", GradientType=1);
+            color: white;
+            overflow: hidden;
+            position: relative;
+            transform-style: preserve-3d;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            cursor: pointer;
+            margin-top: 2rem;
+        }
+
+        #card:hover {
+            transform: rotateY(10deg) rotateX(10deg) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        #card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            z-index: 1;
+        }
+
+        #card:hover:before {
+            transform: translateX(-100%);
+        }
+
+        #card:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            z-index: 1;
+        }
+
+        #card:hover:after {
+            transform: translateX(100%);
+        }
+
+        .btnContainer {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 6rem
+        }
+
+        .form-selector {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-selector:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Customer Review Sentiment Analysis</h1>
+        <div class="btnContainer">
+            <div id="card" class="form-selector" onclick="redirectTo('inputText.html')">Enter feedback manually</div>
+            <div id="card" class="form-selector" onclick="redirectTo('upload_file.html')">Upload CSV file</div>
+        </div>
+    </div>
+
+    <script>
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+
+</html>
